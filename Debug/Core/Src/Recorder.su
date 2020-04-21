@@ -1,0 +1,10 @@
+Recorder.c:11:6:startTimerButton	16	static
+Recorder.c:15:6:startTimerSound	16	static
+Recorder.c:19:6:stopTimerButton	16	static
+Recorder.c:23:6:stopTimerSound	16	static
+Recorder.c:27:6:setTimerButton	16	static
+Recorder.c:32:6:setTimerSound	16	static
+Recorder.c:37:6:onStart	16	static
+Recorder.c:46:6:onUpdate	16	static
+Recorder.c:76:6:onTimerUpdate	16	static
+Recorder.c:80:6:onButton	16	static
