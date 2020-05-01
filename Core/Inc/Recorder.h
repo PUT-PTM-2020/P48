@@ -10,27 +10,51 @@
 
 #include "main.h"
 
-typedef struct Recorder {
-	TIM_HandleTypeDef *soundTimer;
-	TIM_HandleTypeDef *buttonTimer;
+#include "List.h"
 
-	char fileBuffer[256];
-	int diode;
+typedef struct Recorder {
+	// hardware handles
+	TIM_HandleTypeDef *soundTimer;
+
+	DAC_HandleTypeDef *speaker;
+	ADC_HandleTypeDef *microphone;
+
+	// current state
+	void (*onStartState)(struct Recorder*);
+	void (*onUpdateState)(struct Recorder*);
+	void (*onTimerUpdateState)(struct Recorder*, TIM_HandleTypeDef*);
+	void (*onButtonState)(struct Recorder*, uint16_t);
+
+	// waiting state variables
+
+	// recording state variables
+	List *soundList;
+	uint32_t soundData;
+
+	// playing state variables
+	Node *currentSoundNode;
+	uint64_t currentDataIndex;
 } Recorder;
 
-void startTimerButton(Recorder *recorder);
-void startTimerSound(Recorder *recorder);
+void startTimer(TIM_HandleTypeDef *timer);
 
-void stopTimerSound(Recorder *recorder);
-void stopTimerSoundButton(Recorder *recorder);
+void setTimer(TIM_HandleTypeDef *timer, short prescaler, short period);
 
-void setTimerSound(Recorder *recorder, short prescaler, short period);
-void setTimerSoundButton(Recorder *recorder, short prescaler, short period);
+void stopTimer(TIM_HandleTypeDef *timer);
 
+void startSpeaker(Recorder *recorder);
+void setSpeakerValue(Recorder *recorder, uint32_t value);
+void stopSpeaker(Recorder *recorder);
+
+uint32_t readMicrophoneData(Recorder *recorder);
+
+void changeToStateWaiting(Recorder *recorder);
+void changeToStateRecording(Recorder *recorder);
+void changeToStatePlaying(Recorder *recorder);
 
 void onStart(Recorder *recorder);
 void onUpdate(Recorder *recorder);
-void onTimerUpdate(Recorder *recorder, TIM_HandleTypeDef *htim);
+void onTimerUpdate(Recorder *recorder, TIM_HandleTypeDef *timer);
 void onButton(Recorder *recorder, uint16_t pin);
 
 #endif /* INC_RECORDER_H_ */

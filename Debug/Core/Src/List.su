@@ -1,0 +1,4 @@
+List.c:10:7:createList	32	static
+List.c:24:7:createNode	24	static
+List.c:33:6:addToList	24	static
+List.c:44:6:freeList	24	static

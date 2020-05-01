@@ -1,0 +1,4 @@
+StateWaiting.c:10:6:onStartStateWaiting	16	static
+StateWaiting.c:14:6:onUpdateStateWaiting	16	static
+StateWaiting.c:21:6:onTimerUpdateStateWaiting	16	static
+StateWaiting.c:25:6:onButtonStateWaiting	16	static
