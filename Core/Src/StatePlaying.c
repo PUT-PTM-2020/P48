@@ -31,12 +31,13 @@ void onUpdateStatePlaying(Recorder *recorder) {
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, GPIO_PIN_SET);
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_RESET);
 
-	setSpeakerValue(recorder, recorder->soundData);
+	// scale 12 bit sound sample to 8 bit
+	setSpeakerValue(recorder, recorder->soundData / 16);
 }
 
 void onTimerUpdateStatePlaying(Recorder *recorder, TIM_HandleTypeDef *timer) {
 	if (timer == recorder->soundTimer) {
-		uint64_t *dataIndex = &recorder->currentDataIndex;
+		volatile uint64_t *dataIndex = &recorder->currentDataIndex;
 
 		if (*dataIndex >= recorder->soundList->dataSize) {
 			recorder->currentSoundNode = recorder->currentSoundNode->next;

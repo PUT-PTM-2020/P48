@@ -29,7 +29,8 @@ void startSpeaker(Recorder *recorder) {
 }
 
 void setSpeakerValue(Recorder *recorder, uint32_t value) {
-	HAL_DAC_SetValue(recorder->speaker, DAC_CHANNEL_1, DAC_ALIGN_12B_R, value & 0x00000FFF);
+	// mask is needed make sure that errors in code won't break speaker
+	HAL_DAC_SetValue(recorder->speaker, DAC_CHANNEL_1, DAC_ALIGN_12B_R, value & 0x000000FF);
 }
 
 void stopSpeaker(Recorder *recorder) {

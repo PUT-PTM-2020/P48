@@ -27,23 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  00020070  2**0
                   CONTENTS, READONLY
- 12 .debug_info   00011885  00000000  00000000  000200a0  2**0
+ 12 .debug_info   000118df  00000000  00000000  000200a0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_abbrev 0000238d  00000000  00000000  00031925  2**0
+ 13 .debug_abbrev 00002394  00000000  00000000  0003197f  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_aranges 00000c98  00000000  00000000  00033cb8  2**3
+ 14 .debug_aranges 00000c98  00000000  00000000  00033d18  2**3
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_ranges 00000b70  00000000  00000000  00034950  2**3
+ 15 .debug_ranges 00000b70  00000000  00000000  000349b0  2**3
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_macro  00022342  00000000  00000000  000354c0  2**0
+ 16 .debug_macro  00022342  00000000  00000000  00035520  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_line   0000b02d  00000000  00000000  00057802  2**0
+ 17 .debug_line   0000b02d  00000000  00000000  00057862  2**0
                   CONTENTS, READONLY, DEBUGGING
- 18 .debug_str    000cd88e  00000000  00000000  0006282f  2**0
+ 18 .debug_str    000cd88e  00000000  00000000  0006288f  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .comment      0000007b  00000000  00000000  001300bd  2**0
+ 19 .comment      0000007b  00000000  00000000  0013011d  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00003478  00000000  00000000  00130138  2**2
+ 20 .debug_frame  00003478  00000000  00000000  00130198  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -652,390 +652,393 @@ void setSpeakerValue(Recorder *recorder, uint32_t value) {
  800069a:	af00      	add	r7, sp, #0
  800069c:	6078      	str	r0, [r7, #4]
  800069e:	6039      	str	r1, [r7, #0]
-	HAL_DAC_SetValue(recorder->speaker, DAC_CHANNEL_1, DAC_ALIGN_12B_R, value & 0x00000FFF);
+	// mask is needed make sure that errors in code won't break speaker
+	HAL_DAC_SetValue(recorder->speaker, DAC_CHANNEL_1, DAC_ALIGN_12B_R, value & 0x000000FF);
  80006a0:	687b      	ldr	r3, [r7, #4]
  80006a2:	6858      	ldr	r0, [r3, #4]
  80006a4:	683b      	ldr	r3, [r7, #0]
- 80006a6:	f3c3 030b 	ubfx	r3, r3, #0, #12
- 80006aa:	2200      	movs	r2, #0
- 80006ac:	2100      	movs	r1, #0
- 80006ae:	f001 fcbc 	bl	800202a <HAL_DAC_SetValue>
+ 80006a6:	b2db      	uxtb	r3, r3
+ 80006a8:	2200      	movs	r2, #0
+ 80006aa:	2100      	movs	r1, #0
+ 80006ac:	f001 fcbd 	bl	800202a <HAL_DAC_SetValue>
 }
- 80006b2:	bf00      	nop
- 80006b4:	3708      	adds	r7, #8
- 80006b6:	46bd      	mov	sp, r7
- 80006b8:	bd80      	pop	{r7, pc}
+ 80006b0:	bf00      	nop
+ 80006b2:	3708      	adds	r7, #8
+ 80006b4:	46bd      	mov	sp, r7
+ 80006b6:	bd80      	pop	{r7, pc}
 
-080006ba <stopSpeaker>:
+080006b8 <stopSpeaker>:
 
 void stopSpeaker(Recorder *recorder) {
- 80006ba:	b580      	push	{r7, lr}
- 80006bc:	b082      	sub	sp, #8
- 80006be:	af00      	add	r7, sp, #0
- 80006c0:	6078      	str	r0, [r7, #4]
+ 80006b8:	b580      	push	{r7, lr}
+ 80006ba:	b082      	sub	sp, #8
+ 80006bc:	af00      	add	r7, sp, #0
+ 80006be:	6078      	str	r0, [r7, #4]
 	HAL_DAC_Stop(recorder->speaker, DAC_CHANNEL_1);
- 80006c2:	687b      	ldr	r3, [r7, #4]
- 80006c4:	685b      	ldr	r3, [r3, #4]
- 80006c6:	2100      	movs	r1, #0
- 80006c8:	4618      	mov	r0, r3
- 80006ca:	f001 fc46 	bl	8001f5a <HAL_DAC_Stop>
+ 80006c0:	687b      	ldr	r3, [r7, #4]
+ 80006c2:	685b      	ldr	r3, [r3, #4]
+ 80006c4:	2100      	movs	r1, #0
+ 80006c6:	4618      	mov	r0, r3
+ 80006c8:	f001 fc47 	bl	8001f5a <HAL_DAC_Stop>
 }
- 80006ce:	bf00      	nop
- 80006d0:	3708      	adds	r7, #8
- 80006d2:	46bd      	mov	sp, r7
- 80006d4:	bd80      	pop	{r7, pc}
+ 80006cc:	bf00      	nop
+ 80006ce:	3708      	adds	r7, #8
+ 80006d0:	46bd      	mov	sp, r7
+ 80006d2:	bd80      	pop	{r7, pc}
 
-080006d6 <readMicrophoneData>:
+080006d4 <readMicrophoneData>:
 
 uint32_t readMicrophoneData(Recorder *recorder) {
- 80006d6:	b580      	push	{r7, lr}
- 80006d8:	b082      	sub	sp, #8
- 80006da:	af00      	add	r7, sp, #0
- 80006dc:	6078      	str	r0, [r7, #4]
+ 80006d4:	b580      	push	{r7, lr}
+ 80006d6:	b082      	sub	sp, #8
+ 80006d8:	af00      	add	r7, sp, #0
+ 80006da:	6078      	str	r0, [r7, #4]
 	HAL_ADC_Start(recorder->microphone);
- 80006de:	687b      	ldr	r3, [r7, #4]
- 80006e0:	689b      	ldr	r3, [r3, #8]
- 80006e2:	4618      	mov	r0, r3
- 80006e4:	f000 ff2a 	bl	800153c <HAL_ADC_Start>
+ 80006dc:	687b      	ldr	r3, [r7, #4]
+ 80006de:	689b      	ldr	r3, [r3, #8]
+ 80006e0:	4618      	mov	r0, r3
+ 80006e2:	f000 ff2b 	bl	800153c <HAL_ADC_Start>
 
 	if(HAL_ADC_PollForConversion(recorder->microphone, 10) == HAL_OK) {
- 80006e8:	687b      	ldr	r3, [r7, #4]
- 80006ea:	689b      	ldr	r3, [r3, #8]
- 80006ec:	210a      	movs	r1, #10
- 80006ee:	4618      	mov	r0, r3
- 80006f0:	f000 ffea 	bl	80016c8 <HAL_ADC_PollForConversion>
- 80006f4:	4603      	mov	r3, r0
- 80006f6:	2b00      	cmp	r3, #0
- 80006f8:	d106      	bne.n	8000708 <readMicrophoneData+0x32>
+ 80006e6:	687b      	ldr	r3, [r7, #4]
+ 80006e8:	689b      	ldr	r3, [r3, #8]
+ 80006ea:	210a      	movs	r1, #10
+ 80006ec:	4618      	mov	r0, r3
+ 80006ee:	f000 ffeb 	bl	80016c8 <HAL_ADC_PollForConversion>
+ 80006f2:	4603      	mov	r3, r0
+ 80006f4:	2b00      	cmp	r3, #0
+ 80006f6:	d106      	bne.n	8000706 <readMicrophoneData+0x32>
 		return HAL_ADC_GetValue(recorder->microphone);
- 80006fa:	687b      	ldr	r3, [r7, #4]
- 80006fc:	689b      	ldr	r3, [r3, #8]
- 80006fe:	4618      	mov	r0, r3
- 8000700:	f001 f866 	bl	80017d0 <HAL_ADC_GetValue>
- 8000704:	4603      	mov	r3, r0
- 8000706:	e000      	b.n	800070a <readMicrophoneData+0x34>
+ 80006f8:	687b      	ldr	r3, [r7, #4]
+ 80006fa:	689b      	ldr	r3, [r3, #8]
+ 80006fc:	4618      	mov	r0, r3
+ 80006fe:	f001 f867 	bl	80017d0 <HAL_ADC_GetValue>
+ 8000702:	4603      	mov	r3, r0
+ 8000704:	e000      	b.n	8000708 <readMicrophoneData+0x34>
 	}
 
 	return 0;
- 8000708:	2300      	movs	r3, #0
+ 8000706:	2300      	movs	r3, #0
 }
- 800070a:	4618      	mov	r0, r3
- 800070c:	3708      	adds	r7, #8
- 800070e:	46bd      	mov	sp, r7
- 8000710:	bd80      	pop	{r7, pc}
-	...
+ 8000708:	4618      	mov	r0, r3
+ 800070a:	3708      	adds	r7, #8
+ 800070c:	46bd      	mov	sp, r7
+ 800070e:	bd80      	pop	{r7, pc}
 
-08000714 <changeToStateWaiting>:
+08000710 <changeToStateWaiting>:
 
 void changeToStateWaiting(Recorder *recorder) {
- 8000714:	b580      	push	{r7, lr}
- 8000716:	b082      	sub	sp, #8
- 8000718:	af00      	add	r7, sp, #0
- 800071a:	6078      	str	r0, [r7, #4]
+ 8000710:	b580      	push	{r7, lr}
+ 8000712:	b082      	sub	sp, #8
+ 8000714:	af00      	add	r7, sp, #0
+ 8000716:	6078      	str	r0, [r7, #4]
 	recorder->onStartState = onStartStateWaiting;
- 800071c:	687b      	ldr	r3, [r7, #4]
- 800071e:	4a09      	ldr	r2, [pc, #36]	; (8000744 <changeToStateWaiting+0x30>)
- 8000720:	60da      	str	r2, [r3, #12]
+ 8000718:	687b      	ldr	r3, [r7, #4]
+ 800071a:	4a09      	ldr	r2, [pc, #36]	; (8000740 <changeToStateWaiting+0x30>)
+ 800071c:	60da      	str	r2, [r3, #12]
 	recorder->onUpdateState = onUpdateStateWaiting;
- 8000722:	687b      	ldr	r3, [r7, #4]
- 8000724:	4a08      	ldr	r2, [pc, #32]	; (8000748 <changeToStateWaiting+0x34>)
- 8000726:	611a      	str	r2, [r3, #16]
+ 800071e:	687b      	ldr	r3, [r7, #4]
+ 8000720:	4a08      	ldr	r2, [pc, #32]	; (8000744 <changeToStateWaiting+0x34>)
+ 8000722:	611a      	str	r2, [r3, #16]
 	recorder->onTimerUpdateState = onTimerUpdateStateWaiting;
- 8000728:	687b      	ldr	r3, [r7, #4]
- 800072a:	4a08      	ldr	r2, [pc, #32]	; (800074c <changeToStateWaiting+0x38>)
- 800072c:	615a      	str	r2, [r3, #20]
+ 8000724:	687b      	ldr	r3, [r7, #4]
+ 8000726:	4a08      	ldr	r2, [pc, #32]	; (8000748 <changeToStateWaiting+0x38>)
+ 8000728:	615a      	str	r2, [r3, #20]
 	recorder->onButtonState = onButtonStateWaiting;
- 800072e:	687b      	ldr	r3, [r7, #4]
- 8000730:	4a07      	ldr	r2, [pc, #28]	; (8000750 <changeToStateWaiting+0x3c>)
- 8000732:	619a      	str	r2, [r3, #24]
+ 800072a:	687b      	ldr	r3, [r7, #4]
+ 800072c:	4a07      	ldr	r2, [pc, #28]	; (800074c <changeToStateWaiting+0x3c>)
+ 800072e:	619a      	str	r2, [r3, #24]
 
 	onStart(recorder);
- 8000734:	6878      	ldr	r0, [r7, #4]
- 8000736:	f000 f84d 	bl	80007d4 <onStart>
+ 8000730:	6878      	ldr	r0, [r7, #4]
+ 8000732:	f000 f84d 	bl	80007d0 <onStart>
 }
- 800073a:	bf00      	nop
- 800073c:	3708      	adds	r7, #8
- 800073e:	46bd      	mov	sp, r7
- 8000740:	bd80      	pop	{r7, pc}
- 8000742:	bf00      	nop
- 8000744:	08000b01 	.word	0x08000b01
- 8000748:	08000b15 	.word	0x08000b15
- 800074c:	08000b59 	.word	0x08000b59
- 8000750:	08000b71 	.word	0x08000b71
+ 8000736:	bf00      	nop
+ 8000738:	3708      	adds	r7, #8
+ 800073a:	46bd      	mov	sp, r7
+ 800073c:	bd80      	pop	{r7, pc}
+ 800073e:	bf00      	nop
+ 8000740:	08000b01 	.word	0x08000b01
+ 8000744:	08000b15 	.word	0x08000b15
+ 8000748:	08000b59 	.word	0x08000b59
+ 800074c:	08000b71 	.word	0x08000b71
 
-08000754 <changeToStateRecording>:
+08000750 <changeToStateRecording>:
 
 void changeToStateRecording(Recorder *recorder) {
- 8000754:	b580      	push	{r7, lr}
- 8000756:	b082      	sub	sp, #8
- 8000758:	af00      	add	r7, sp, #0
- 800075a:	6078      	str	r0, [r7, #4]
+ 8000750:	b580      	push	{r7, lr}
+ 8000752:	b082      	sub	sp, #8
+ 8000754:	af00      	add	r7, sp, #0
+ 8000756:	6078      	str	r0, [r7, #4]
 	recorder->onStartState = onStartStateRecording;
- 800075c:	687b      	ldr	r3, [r7, #4]
- 800075e:	4a09      	ldr	r2, [pc, #36]	; (8000784 <changeToStateRecording+0x30>)
- 8000760:	60da      	str	r2, [r3, #12]
+ 8000758:	687b      	ldr	r3, [r7, #4]
+ 800075a:	4a09      	ldr	r2, [pc, #36]	; (8000780 <changeToStateRecording+0x30>)
+ 800075c:	60da      	str	r2, [r3, #12]
 	recorder->onUpdateState = onUpdateStateRecording;
- 8000762:	687b      	ldr	r3, [r7, #4]
- 8000764:	4a08      	ldr	r2, [pc, #32]	; (8000788 <changeToStateRecording+0x34>)
- 8000766:	611a      	str	r2, [r3, #16]
+ 800075e:	687b      	ldr	r3, [r7, #4]
+ 8000760:	4a08      	ldr	r2, [pc, #32]	; (8000784 <changeToStateRecording+0x34>)
+ 8000762:	611a      	str	r2, [r3, #16]
 	recorder->onTimerUpdateState = onTimerUpdateStateRecording;
- 8000768:	687b      	ldr	r3, [r7, #4]
- 800076a:	4a08      	ldr	r2, [pc, #32]	; (800078c <changeToStateRecording+0x38>)
- 800076c:	615a      	str	r2, [r3, #20]
+ 8000764:	687b      	ldr	r3, [r7, #4]
+ 8000766:	4a08      	ldr	r2, [pc, #32]	; (8000788 <changeToStateRecording+0x38>)
+ 8000768:	615a      	str	r2, [r3, #20]
 	recorder->onButtonState = onButtonStateRecording;
- 800076e:	687b      	ldr	r3, [r7, #4]
- 8000770:	4a07      	ldr	r2, [pc, #28]	; (8000790 <changeToStateRecording+0x3c>)
- 8000772:	619a      	str	r2, [r3, #24]
+ 800076a:	687b      	ldr	r3, [r7, #4]
+ 800076c:	4a07      	ldr	r2, [pc, #28]	; (800078c <changeToStateRecording+0x3c>)
+ 800076e:	619a      	str	r2, [r3, #24]
 
 	onStart(recorder);
- 8000774:	6878      	ldr	r0, [r7, #4]
- 8000776:	f000 f82d 	bl	80007d4 <onStart>
+ 8000770:	6878      	ldr	r0, [r7, #4]
+ 8000772:	f000 f82d 	bl	80007d0 <onStart>
 }
- 800077a:	bf00      	nop
- 800077c:	3708      	adds	r7, #8
- 800077e:	46bd      	mov	sp, r7
- 8000780:	bd80      	pop	{r7, pc}
- 8000782:	bf00      	nop
- 8000784:	080009c5 	.word	0x080009c5
- 8000788:	08000a09 	.word	0x08000a09
- 800078c:	08000a59 	.word	0x08000a59
- 8000790:	08000a89 	.word	0x08000a89
+ 8000776:	bf00      	nop
+ 8000778:	3708      	adds	r7, #8
+ 800077a:	46bd      	mov	sp, r7
+ 800077c:	bd80      	pop	{r7, pc}
+ 800077e:	bf00      	nop
+ 8000780:	080009c5 	.word	0x080009c5
+ 8000784:	08000a09 	.word	0x08000a09
+ 8000788:	08000a59 	.word	0x08000a59
+ 800078c:	08000a89 	.word	0x08000a89
 
-08000794 <changeToStatePlaying>:
+08000790 <changeToStatePlaying>:
 
 void changeToStatePlaying(Recorder *recorder) {
- 8000794:	b580      	push	{r7, lr}
- 8000796:	b082      	sub	sp, #8
- 8000798:	af00      	add	r7, sp, #0
- 800079a:	6078      	str	r0, [r7, #4]
+ 8000790:	b580      	push	{r7, lr}
+ 8000792:	b082      	sub	sp, #8
+ 8000794:	af00      	add	r7, sp, #0
+ 8000796:	6078      	str	r0, [r7, #4]
 	recorder->onStartState = onStartStatePlaying;
- 800079c:	687b      	ldr	r3, [r7, #4]
- 800079e:	4a09      	ldr	r2, [pc, #36]	; (80007c4 <changeToStatePlaying+0x30>)
- 80007a0:	60da      	str	r2, [r3, #12]
+ 8000798:	687b      	ldr	r3, [r7, #4]
+ 800079a:	4a09      	ldr	r2, [pc, #36]	; (80007c0 <changeToStatePlaying+0x30>)
+ 800079c:	60da      	str	r2, [r3, #12]
 	recorder->onUpdateState = onUpdateStatePlaying;
- 80007a2:	687b      	ldr	r3, [r7, #4]
- 80007a4:	4a08      	ldr	r2, [pc, #32]	; (80007c8 <changeToStatePlaying+0x34>)
- 80007a6:	611a      	str	r2, [r3, #16]
+ 800079e:	687b      	ldr	r3, [r7, #4]
+ 80007a0:	4a08      	ldr	r2, [pc, #32]	; (80007c4 <changeToStatePlaying+0x34>)
+ 80007a2:	611a      	str	r2, [r3, #16]
 	recorder->onTimerUpdateState = onTimerUpdateStatePlaying;
- 80007a8:	687b      	ldr	r3, [r7, #4]
- 80007aa:	4a08      	ldr	r2, [pc, #32]	; (80007cc <changeToStatePlaying+0x38>)
- 80007ac:	615a      	str	r2, [r3, #20]
+ 80007a4:	687b      	ldr	r3, [r7, #4]
+ 80007a6:	4a08      	ldr	r2, [pc, #32]	; (80007c8 <changeToStatePlaying+0x38>)
+ 80007a8:	615a      	str	r2, [r3, #20]
 	recorder->onButtonState = onButtonStatePlaying;
- 80007ae:	687b      	ldr	r3, [r7, #4]
- 80007b0:	4a07      	ldr	r2, [pc, #28]	; (80007d0 <changeToStatePlaying+0x3c>)
- 80007b2:	619a      	str	r2, [r3, #24]
+ 80007aa:	687b      	ldr	r3, [r7, #4]
+ 80007ac:	4a07      	ldr	r2, [pc, #28]	; (80007cc <changeToStatePlaying+0x3c>)
+ 80007ae:	619a      	str	r2, [r3, #24]
 
 	onStart(recorder);
- 80007b4:	6878      	ldr	r0, [r7, #4]
- 80007b6:	f000 f80d 	bl	80007d4 <onStart>
+ 80007b0:	6878      	ldr	r0, [r7, #4]
+ 80007b2:	f000 f80d 	bl	80007d0 <onStart>
 }
- 80007ba:	bf00      	nop
- 80007bc:	3708      	adds	r7, #8
- 80007be:	46bd      	mov	sp, r7
- 80007c0:	bd80      	pop	{r7, pc}
- 80007c2:	bf00      	nop
- 80007c4:	08000871 	.word	0x08000871
- 80007c8:	080008c1 	.word	0x080008c1
- 80007cc:	08000911 	.word	0x08000911
- 80007d0:	08000999 	.word	0x08000999
+ 80007b6:	bf00      	nop
+ 80007b8:	3708      	adds	r7, #8
+ 80007ba:	46bd      	mov	sp, r7
+ 80007bc:	bd80      	pop	{r7, pc}
+ 80007be:	bf00      	nop
+ 80007c0:	0800086d 	.word	0x0800086d
+ 80007c4:	080008bd 	.word	0x080008bd
+ 80007c8:	08000911 	.word	0x08000911
+ 80007cc:	08000999 	.word	0x08000999
 
-080007d4 <onStart>:
+080007d0 <onStart>:
 
 
 void onStart(Recorder *recorder) {
- 80007d4:	b580      	push	{r7, lr}
- 80007d6:	b082      	sub	sp, #8
- 80007d8:	af00      	add	r7, sp, #0
- 80007da:	6078      	str	r0, [r7, #4]
+ 80007d0:	b580      	push	{r7, lr}
+ 80007d2:	b082      	sub	sp, #8
+ 80007d4:	af00      	add	r7, sp, #0
+ 80007d6:	6078      	str	r0, [r7, #4]
 	recorder->onStartState(recorder);
- 80007dc:	687b      	ldr	r3, [r7, #4]
- 80007de:	68db      	ldr	r3, [r3, #12]
- 80007e0:	6878      	ldr	r0, [r7, #4]
- 80007e2:	4798      	blx	r3
+ 80007d8:	687b      	ldr	r3, [r7, #4]
+ 80007da:	68db      	ldr	r3, [r3, #12]
+ 80007dc:	6878      	ldr	r0, [r7, #4]
+ 80007de:	4798      	blx	r3
 }
- 80007e4:	bf00      	nop
- 80007e6:	3708      	adds	r7, #8
- 80007e8:	46bd      	mov	sp, r7
- 80007ea:	bd80      	pop	{r7, pc}
+ 80007e0:	bf00      	nop
+ 80007e2:	3708      	adds	r7, #8
+ 80007e4:	46bd      	mov	sp, r7
+ 80007e6:	bd80      	pop	{r7, pc}
 
-080007ec <onUpdate>:
+080007e8 <onUpdate>:
 
 void onUpdate(Recorder *recorder) {
- 80007ec:	b580      	push	{r7, lr}
- 80007ee:	b082      	sub	sp, #8
- 80007f0:	af00      	add	r7, sp, #0
- 80007f2:	6078      	str	r0, [r7, #4]
+ 80007e8:	b580      	push	{r7, lr}
+ 80007ea:	b082      	sub	sp, #8
+ 80007ec:	af00      	add	r7, sp, #0
+ 80007ee:	6078      	str	r0, [r7, #4]
 	recorder->onUpdateState(recorder);
- 80007f4:	687b      	ldr	r3, [r7, #4]
- 80007f6:	691b      	ldr	r3, [r3, #16]
- 80007f8:	6878      	ldr	r0, [r7, #4]
- 80007fa:	4798      	blx	r3
+ 80007f0:	687b      	ldr	r3, [r7, #4]
+ 80007f2:	691b      	ldr	r3, [r3, #16]
+ 80007f4:	6878      	ldr	r0, [r7, #4]
+ 80007f6:	4798      	blx	r3
 }
- 80007fc:	bf00      	nop
- 80007fe:	3708      	adds	r7, #8
- 8000800:	46bd      	mov	sp, r7
- 8000802:	bd80      	pop	{r7, pc}
+ 80007f8:	bf00      	nop
+ 80007fa:	3708      	adds	r7, #8
+ 80007fc:	46bd      	mov	sp, r7
+ 80007fe:	bd80      	pop	{r7, pc}
 
-08000804 <onTimerUpdate>:
+08000800 <onTimerUpdate>:
 
 void onTimerUpdate(Recorder *recorder, TIM_HandleTypeDef *timer) {
- 8000804:	b580      	push	{r7, lr}
- 8000806:	b082      	sub	sp, #8
- 8000808:	af00      	add	r7, sp, #0
- 800080a:	6078      	str	r0, [r7, #4]
- 800080c:	6039      	str	r1, [r7, #0]
+ 8000800:	b580      	push	{r7, lr}
+ 8000802:	b082      	sub	sp, #8
+ 8000804:	af00      	add	r7, sp, #0
+ 8000806:	6078      	str	r0, [r7, #4]
+ 8000808:	6039      	str	r1, [r7, #0]
 	recorder->onTimerUpdateState(recorder, timer);
- 800080e:	687b      	ldr	r3, [r7, #4]
- 8000810:	695b      	ldr	r3, [r3, #20]
- 8000812:	6839      	ldr	r1, [r7, #0]
- 8000814:	6878      	ldr	r0, [r7, #4]
- 8000816:	4798      	blx	r3
+ 800080a:	687b      	ldr	r3, [r7, #4]
+ 800080c:	695b      	ldr	r3, [r3, #20]
+ 800080e:	6839      	ldr	r1, [r7, #0]
+ 8000810:	6878      	ldr	r0, [r7, #4]
+ 8000812:	4798      	blx	r3
 }
- 8000818:	bf00      	nop
- 800081a:	3708      	adds	r7, #8
- 800081c:	46bd      	mov	sp, r7
- 800081e:	bd80      	pop	{r7, pc}
+ 8000814:	bf00      	nop
+ 8000816:	3708      	adds	r7, #8
+ 8000818:	46bd      	mov	sp, r7
+ 800081a:	bd80      	pop	{r7, pc}
 
-08000820 <onButton>:
+0800081c <onButton>:
 
 void onButton(Recorder *recorder, uint16_t pin) {
- 8000820:	b580      	push	{r7, lr}
- 8000822:	b082      	sub	sp, #8
- 8000824:	af00      	add	r7, sp, #0
- 8000826:	6078      	str	r0, [r7, #4]
- 8000828:	460b      	mov	r3, r1
- 800082a:	807b      	strh	r3, [r7, #2]
+ 800081c:	b580      	push	{r7, lr}
+ 800081e:	b082      	sub	sp, #8
+ 8000820:	af00      	add	r7, sp, #0
+ 8000822:	6078      	str	r0, [r7, #4]
+ 8000824:	460b      	mov	r3, r1
+ 8000826:	807b      	strh	r3, [r7, #2]
 	recorder->onButtonState(recorder, pin);
- 800082c:	687b      	ldr	r3, [r7, #4]
- 800082e:	699b      	ldr	r3, [r3, #24]
- 8000830:	887a      	ldrh	r2, [r7, #2]
- 8000832:	4611      	mov	r1, r2
- 8000834:	6878      	ldr	r0, [r7, #4]
- 8000836:	4798      	blx	r3
+ 8000828:	687b      	ldr	r3, [r7, #4]
+ 800082a:	699b      	ldr	r3, [r3, #24]
+ 800082c:	887a      	ldrh	r2, [r7, #2]
+ 800082e:	4611      	mov	r1, r2
+ 8000830:	6878      	ldr	r0, [r7, #4]
+ 8000832:	4798      	blx	r3
 }
- 8000838:	bf00      	nop
- 800083a:	3708      	adds	r7, #8
- 800083c:	46bd      	mov	sp, r7
- 800083e:	bd80      	pop	{r7, pc}
+ 8000834:	bf00      	nop
+ 8000836:	3708      	adds	r7, #8
+ 8000838:	46bd      	mov	sp, r7
+ 800083a:	bd80      	pop	{r7, pc}
 
-08000840 <cleanUp>:
+0800083c <cleanUp>:
  *      Author: Grzesio
  */
 
 #include "StatePlaying.h"
 
 void cleanUp(Recorder *recorder) {
- 8000840:	b580      	push	{r7, lr}
- 8000842:	b082      	sub	sp, #8
- 8000844:	af00      	add	r7, sp, #0
- 8000846:	6078      	str	r0, [r7, #4]
+ 800083c:	b580      	push	{r7, lr}
+ 800083e:	b082      	sub	sp, #8
+ 8000840:	af00      	add	r7, sp, #0
+ 8000842:	6078      	str	r0, [r7, #4]
 	freeList(recorder->soundList);
- 8000848:	687b      	ldr	r3, [r7, #4]
- 800084a:	69db      	ldr	r3, [r3, #28]
- 800084c:	4618      	mov	r0, r3
- 800084e:	f7ff fec7 	bl	80005e0 <freeList>
+ 8000844:	687b      	ldr	r3, [r7, #4]
+ 8000846:	69db      	ldr	r3, [r3, #28]
+ 8000848:	4618      	mov	r0, r3
+ 800084a:	f7ff fec9 	bl	80005e0 <freeList>
 
 	stopSpeaker(recorder);
- 8000852:	6878      	ldr	r0, [r7, #4]
- 8000854:	f7ff ff31 	bl	80006ba <stopSpeaker>
+ 800084e:	6878      	ldr	r0, [r7, #4]
+ 8000850:	f7ff ff32 	bl	80006b8 <stopSpeaker>
 	stopTimer(recorder->soundTimer);
- 8000858:	687b      	ldr	r3, [r7, #4]
- 800085a:	681b      	ldr	r3, [r3, #0]
- 800085c:	4618      	mov	r0, r3
- 800085e:	f7ff ff01 	bl	8000664 <stopTimer>
+ 8000854:	687b      	ldr	r3, [r7, #4]
+ 8000856:	681b      	ldr	r3, [r3, #0]
+ 8000858:	4618      	mov	r0, r3
+ 800085a:	f7ff ff03 	bl	8000664 <stopTimer>
 	changeToStateWaiting(recorder);
- 8000862:	6878      	ldr	r0, [r7, #4]
- 8000864:	f7ff ff56 	bl	8000714 <changeToStateWaiting>
+ 800085e:	6878      	ldr	r0, [r7, #4]
+ 8000860:	f7ff ff56 	bl	8000710 <changeToStateWaiting>
 }
- 8000868:	bf00      	nop
- 800086a:	3708      	adds	r7, #8
- 800086c:	46bd      	mov	sp, r7
- 800086e:	bd80      	pop	{r7, pc}
+ 8000864:	bf00      	nop
+ 8000866:	3708      	adds	r7, #8
+ 8000868:	46bd      	mov	sp, r7
+ 800086a:	bd80      	pop	{r7, pc}
 
-08000870 <onStartStatePlaying>:
+0800086c <onStartStatePlaying>:
 
 void onStartStatePlaying(Recorder *recorder) {
- 8000870:	b590      	push	{r4, r7, lr}
- 8000872:	b083      	sub	sp, #12
- 8000874:	af00      	add	r7, sp, #0
- 8000876:	6078      	str	r0, [r7, #4]
+ 800086c:	b590      	push	{r4, r7, lr}
+ 800086e:	b083      	sub	sp, #12
+ 8000870:	af00      	add	r7, sp, #0
+ 8000872:	6078      	str	r0, [r7, #4]
 	recorder->soundData = 0;
- 8000878:	687b      	ldr	r3, [r7, #4]
- 800087a:	2200      	movs	r2, #0
- 800087c:	621a      	str	r2, [r3, #32]
+ 8000874:	687b      	ldr	r3, [r7, #4]
+ 8000876:	2200      	movs	r2, #0
+ 8000878:	621a      	str	r2, [r3, #32]
 	recorder->currentDataIndex = 0;
- 800087e:	687a      	ldr	r2, [r7, #4]
- 8000880:	f04f 0300 	mov.w	r3, #0
- 8000884:	f04f 0400 	mov.w	r4, #0
- 8000888:	e9c2 340a 	strd	r3, r4, [r2, #40]	; 0x28
+ 800087a:	687a      	ldr	r2, [r7, #4]
+ 800087c:	f04f 0300 	mov.w	r3, #0
+ 8000880:	f04f 0400 	mov.w	r4, #0
+ 8000884:	e9c2 340a 	strd	r3, r4, [r2, #40]	; 0x28
 	recorder->currentSoundNode = recorder->soundList->head;
- 800088c:	687b      	ldr	r3, [r7, #4]
- 800088e:	69db      	ldr	r3, [r3, #28]
- 8000890:	681a      	ldr	r2, [r3, #0]
- 8000892:	687b      	ldr	r3, [r7, #4]
- 8000894:	625a      	str	r2, [r3, #36]	; 0x24
+ 8000888:	687b      	ldr	r3, [r7, #4]
+ 800088a:	69db      	ldr	r3, [r3, #28]
+ 800088c:	681a      	ldr	r2, [r3, #0]
+ 800088e:	687b      	ldr	r3, [r7, #4]
+ 8000890:	625a      	str	r2, [r3, #36]	; 0x24
 
 	startSpeaker(recorder);
- 8000896:	6878      	ldr	r0, [r7, #4]
- 8000898:	f7ff feef 	bl	800067a <startSpeaker>
+ 8000892:	6878      	ldr	r0, [r7, #4]
+ 8000894:	f7ff fef1 	bl	800067a <startSpeaker>
 	setTimer(recorder->soundTimer, 1049, 4);
- 800089c:	687b      	ldr	r3, [r7, #4]
- 800089e:	681b      	ldr	r3, [r3, #0]
- 80008a0:	2204      	movs	r2, #4
- 80008a2:	f240 4119 	movw	r1, #1049	; 0x419
- 80008a6:	4618      	mov	r0, r3
- 80008a8:	f7ff fec4 	bl	8000634 <setTimer>
+ 8000898:	687b      	ldr	r3, [r7, #4]
+ 800089a:	681b      	ldr	r3, [r3, #0]
+ 800089c:	2204      	movs	r2, #4
+ 800089e:	f240 4119 	movw	r1, #1049	; 0x419
+ 80008a2:	4618      	mov	r0, r3
+ 80008a4:	f7ff fec6 	bl	8000634 <setTimer>
 	startTimer(recorder->soundTimer);
- 80008ac:	687b      	ldr	r3, [r7, #4]
- 80008ae:	681b      	ldr	r3, [r3, #0]
- 80008b0:	4618      	mov	r0, r3
- 80008b2:	f7ff feb4 	bl	800061e <startTimer>
+ 80008a8:	687b      	ldr	r3, [r7, #4]
+ 80008aa:	681b      	ldr	r3, [r3, #0]
+ 80008ac:	4618      	mov	r0, r3
+ 80008ae:	f7ff feb6 	bl	800061e <startTimer>
 }
- 80008b6:	bf00      	nop
- 80008b8:	370c      	adds	r7, #12
- 80008ba:	46bd      	mov	sp, r7
- 80008bc:	bd90      	pop	{r4, r7, pc}
+ 80008b2:	bf00      	nop
+ 80008b4:	370c      	adds	r7, #12
+ 80008b6:	46bd      	mov	sp, r7
+ 80008b8:	bd90      	pop	{r4, r7, pc}
 	...
 
-080008c0 <onUpdateStatePlaying>:
+080008bc <onUpdateStatePlaying>:
 
 void onUpdateStatePlaying(Recorder *recorder) {
- 80008c0:	b580      	push	{r7, lr}
- 80008c2:	b082      	sub	sp, #8
- 80008c4:	af00      	add	r7, sp, #0
- 80008c6:	6078      	str	r0, [r7, #4]
+ 80008bc:	b580      	push	{r7, lr}
+ 80008be:	b082      	sub	sp, #8
+ 80008c0:	af00      	add	r7, sp, #0
+ 80008c2:	6078      	str	r0, [r7, #4]
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);
- 80008c8:	2200      	movs	r2, #0
- 80008ca:	f44f 5180 	mov.w	r1, #4096	; 0x1000
- 80008ce:	480f      	ldr	r0, [pc, #60]	; (800090c <onUpdateStatePlaying+0x4c>)
- 80008d0:	f001 fd82 	bl	80023d8 <HAL_GPIO_WritePin>
+ 80008c4:	2200      	movs	r2, #0
+ 80008c6:	f44f 5180 	mov.w	r1, #4096	; 0x1000
+ 80008ca:	4810      	ldr	r0, [pc, #64]	; (800090c <onUpdateStatePlaying+0x50>)
+ 80008cc:	f001 fd84 	bl	80023d8 <HAL_GPIO_WritePin>
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_13, GPIO_PIN_RESET);
- 80008d4:	2200      	movs	r2, #0
- 80008d6:	f44f 5100 	mov.w	r1, #8192	; 0x2000
- 80008da:	480c      	ldr	r0, [pc, #48]	; (800090c <onUpdateStatePlaying+0x4c>)
- 80008dc:	f001 fd7c 	bl	80023d8 <HAL_GPIO_WritePin>
+ 80008d0:	2200      	movs	r2, #0
+ 80008d2:	f44f 5100 	mov.w	r1, #8192	; 0x2000
+ 80008d6:	480d      	ldr	r0, [pc, #52]	; (800090c <onUpdateStatePlaying+0x50>)
+ 80008d8:	f001 fd7e 	bl	80023d8 <HAL_GPIO_WritePin>
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_14, GPIO_PIN_SET);
- 80008e0:	2201      	movs	r2, #1
- 80008e2:	f44f 4180 	mov.w	r1, #16384	; 0x4000
- 80008e6:	4809      	ldr	r0, [pc, #36]	; (800090c <onUpdateStatePlaying+0x4c>)
- 80008e8:	f001 fd76 	bl	80023d8 <HAL_GPIO_WritePin>
+ 80008dc:	2201      	movs	r2, #1
+ 80008de:	f44f 4180 	mov.w	r1, #16384	; 0x4000
+ 80008e2:	480a      	ldr	r0, [pc, #40]	; (800090c <onUpdateStatePlaying+0x50>)
+ 80008e4:	f001 fd78 	bl	80023d8 <HAL_GPIO_WritePin>
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_15, GPIO_PIN_RESET);
- 80008ec:	2200      	movs	r2, #0
- 80008ee:	f44f 4100 	mov.w	r1, #32768	; 0x8000
- 80008f2:	4806      	ldr	r0, [pc, #24]	; (800090c <onUpdateStatePlaying+0x4c>)
- 80008f4:	f001 fd70 	bl	80023d8 <HAL_GPIO_WritePin>
+ 80008e8:	2200      	movs	r2, #0
+ 80008ea:	f44f 4100 	mov.w	r1, #32768	; 0x8000
+ 80008ee:	4807      	ldr	r0, [pc, #28]	; (800090c <onUpdateStatePlaying+0x50>)
+ 80008f0:	f001 fd72 	bl	80023d8 <HAL_GPIO_WritePin>
 
-	setSpeakerValue(recorder, recorder->soundData);
- 80008f8:	687b      	ldr	r3, [r7, #4]
- 80008fa:	6a1b      	ldr	r3, [r3, #32]
- 80008fc:	4619      	mov	r1, r3
- 80008fe:	6878      	ldr	r0, [r7, #4]
- 8000900:	f7ff fec9 	bl	8000696 <setSpeakerValue>
+	// scale 12 bit sound sample to 8 bit
+	setSpeakerValue(recorder, recorder->soundData / 16);
+ 80008f4:	687b      	ldr	r3, [r7, #4]
+ 80008f6:	6a1b      	ldr	r3, [r3, #32]
+ 80008f8:	091b      	lsrs	r3, r3, #4
+ 80008fa:	4619      	mov	r1, r3
+ 80008fc:	6878      	ldr	r0, [r7, #4]
+ 80008fe:	f7ff feca 	bl	8000696 <setSpeakerValue>
 }
- 8000904:	bf00      	nop
- 8000906:	3708      	adds	r7, #8
- 8000908:	46bd      	mov	sp, r7
- 800090a:	bd80      	pop	{r7, pc}
+ 8000902:	bf00      	nop
+ 8000904:	3708      	adds	r7, #8
+ 8000906:	46bd      	mov	sp, r7
+ 8000908:	bd80      	pop	{r7, pc}
+ 800090a:	bf00      	nop
  800090c:	40020c00 	.word	0x40020c00
 
 08000910 <onTimerUpdateStatePlaying>:
@@ -1052,7 +1055,7 @@ void onTimerUpdateStatePlaying(Recorder *recorder, TIM_HandleTypeDef *timer) {
  800091e:	683a      	ldr	r2, [r7, #0]
  8000920:	429a      	cmp	r2, r3
  8000922:	d136      	bne.n	8000992 <onTimerUpdateStatePlaying+0x82>
-		uint64_t *dataIndex = &recorder->currentDataIndex;
+		volatile uint64_t *dataIndex = &recorder->currentDataIndex;
  8000924:	687b      	ldr	r3, [r7, #4]
  8000926:	3328      	adds	r3, #40	; 0x28
  8000928:	60fb      	str	r3, [r7, #12]
@@ -1086,7 +1089,7 @@ void onTimerUpdateStatePlaying(Recorder *recorder, TIM_HandleTypeDef *timer) {
  800095e:	d103      	bne.n	8000968 <onTimerUpdateStatePlaying+0x58>
 				cleanUp(recorder);
  8000960:	6878      	ldr	r0, [r7, #4]
- 8000962:	f7ff ff6d 	bl	8000840 <cleanUp>
+ 8000962:	f7ff ff6b 	bl	800083c <cleanUp>
 				return;
  8000966:	e014      	b.n	8000992 <onTimerUpdateStatePlaying+0x82>
 			}
@@ -1135,7 +1138,7 @@ void onButtonStatePlaying(Recorder *recorder, uint16_t pin) {
  80009b0:	d102      	bne.n	80009b8 <onButtonStatePlaying+0x20>
 		cleanUp(recorder);
  80009b2:	6878      	ldr	r0, [r7, #4]
- 80009b4:	f7ff ff44 	bl	8000840 <cleanUp>
+ 80009b4:	f7ff ff42 	bl	800083c <cleanUp>
 	}
 }
  80009b8:	bf00      	nop
@@ -1216,7 +1219,7 @@ void onUpdateStateRecording(Recorder *recorder) {
 
 	recorder->soundData = readMicrophoneData(recorder);
  8000a40:	6878      	ldr	r0, [r7, #4]
- 8000a42:	f7ff fe48 	bl	80006d6 <readMicrophoneData>
+ 8000a42:	f7ff fe47 	bl	80006d4 <readMicrophoneData>
  8000a46:	4602      	mov	r2, r0
  8000a48:	687b      	ldr	r3, [r7, #4]
  8000a4a:	621a      	str	r2, [r3, #32]
@@ -1314,7 +1317,7 @@ void onButtonStateRecording(Recorder *recorder, uint16_t pin) {
 
 		changeToStatePlaying(recorder);
  8000aee:	6878      	ldr	r0, [r7, #4]
- 8000af0:	f7ff fe50 	bl	8000794 <changeToStatePlaying>
+ 8000af0:	f7ff fe4e 	bl	8000790 <changeToStatePlaying>
 	}
 }
  8000af4:	bf00      	nop
@@ -1411,7 +1414,7 @@ void onButtonStateWaiting(Recorder *recorder, uint16_t pin) {
  8000b88:	d102      	bne.n	8000b90 <onButtonStateWaiting+0x20>
 		changeToStateRecording(recorder);
  8000b8a:	6878      	ldr	r0, [r7, #4]
- 8000b8c:	f7ff fde2 	bl	8000754 <changeToStateRecording>
+ 8000b8c:	f7ff fde0 	bl	8000750 <changeToStateRecording>
 	}
 }
  8000b90:	bf00      	nop
@@ -1440,7 +1443,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 		onTimerUpdate(&recorder, htim);
  8000bae:	6879      	ldr	r1, [r7, #4]
  8000bb0:	480b      	ldr	r0, [pc, #44]	; (8000be0 <HAL_TIM_PeriodElapsedCallback+0x44>)
- 8000bb2:	f7ff fe27 	bl	8000804 <onTimerUpdate>
+ 8000bb2:	f7ff fe25 	bl	8000800 <onTimerUpdate>
 	}
 	else if (htim->Instance == TIM3 && buttonLock > 0) {
 		--buttonLock;
@@ -1496,7 +1499,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
  8000c0c:	88fb      	ldrh	r3, [r7, #6]
  8000c0e:	4619      	mov	r1, r3
  8000c10:	4806      	ldr	r0, [pc, #24]	; (8000c2c <HAL_GPIO_EXTI_Callback+0x40>)
- 8000c12:	f7ff fe05 	bl	8000820 <onButton>
+ 8000c12:	f7ff fe03 	bl	800081c <onButton>
 
 		buttonLock = 2;
  8000c16:	4b03      	ldr	r3, [pc, #12]	; (8000c24 <HAL_GPIO_EXTI_Callback+0x38>)
@@ -1578,12 +1581,12 @@ int main(void)
  8000c74:	609a      	str	r2, [r3, #8]
   changeToStateWaiting(&recorder);
  8000c76:	4804      	ldr	r0, [pc, #16]	; (8000c88 <main+0x58>)
- 8000c78:	f7ff fd4c 	bl	8000714 <changeToStateWaiting>
+ 8000c78:	f7ff fd4a 	bl	8000710 <changeToStateWaiting>
   while (1)
   {
 	  onUpdate(&recorder);
  8000c7c:	4802      	ldr	r0, [pc, #8]	; (8000c88 <main+0x58>)
- 8000c7e:	f7ff fdb5 	bl	80007ec <onUpdate>
+ 8000c7e:	f7ff fdb3 	bl	80007e8 <onUpdate>
  8000c82:	e7fb      	b.n	8000c7c <main+0x4c>
  8000c84:	20000110 	.word	0x20000110
  8000c88:	200000e0 	.word	0x200000e0

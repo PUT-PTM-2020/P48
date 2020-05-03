@@ -12,7 +12,7 @@
 
 #include "List.h"
 
-typedef struct Recorder {
+typedef volatile struct Recorder {
 	// hardware handles
 	TIM_HandleTypeDef *soundTimer;
 
@@ -20,10 +20,10 @@ typedef struct Recorder {
 	ADC_HandleTypeDef *microphone;
 
 	// current state
-	void (*onStartState)(struct Recorder*);
-	void (*onUpdateState)(struct Recorder*);
-	void (*onTimerUpdateState)(struct Recorder*, TIM_HandleTypeDef*);
-	void (*onButtonState)(struct Recorder*, uint16_t);
+	void (*onStartState)(volatile struct Recorder*);
+	void (*onUpdateState)(volatile struct Recorder*);
+	void (*onTimerUpdateState)(volatile struct Recorder*, TIM_HandleTypeDef*);
+	void (*onButtonState)(volatile struct Recorder*, uint16_t);
 
 	// waiting state variables
 

@@ -3944,44 +3944,43 @@ LOAD c:/st/stm32cubeide_1.2.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
                 0x000000000800067a       0x1c Core/Src/Recorder.o
                 0x000000000800067a                startSpeaker
  .text.setSpeakerValue
-                0x0000000008000696       0x24 Core/Src/Recorder.o
+                0x0000000008000696       0x22 Core/Src/Recorder.o
                 0x0000000008000696                setSpeakerValue
  .text.stopSpeaker
-                0x00000000080006ba       0x1c Core/Src/Recorder.o
-                0x00000000080006ba                stopSpeaker
+                0x00000000080006b8       0x1c Core/Src/Recorder.o
+                0x00000000080006b8                stopSpeaker
  .text.readMicrophoneData
-                0x00000000080006d6       0x3c Core/Src/Recorder.o
-                0x00000000080006d6                readMicrophoneData
- *fill*         0x0000000008000712        0x2 
+                0x00000000080006d4       0x3c Core/Src/Recorder.o
+                0x00000000080006d4                readMicrophoneData
  .text.changeToStateWaiting
-                0x0000000008000714       0x40 Core/Src/Recorder.o
-                0x0000000008000714                changeToStateWaiting
+                0x0000000008000710       0x40 Core/Src/Recorder.o
+                0x0000000008000710                changeToStateWaiting
  .text.changeToStateRecording
-                0x0000000008000754       0x40 Core/Src/Recorder.o
-                0x0000000008000754                changeToStateRecording
+                0x0000000008000750       0x40 Core/Src/Recorder.o
+                0x0000000008000750                changeToStateRecording
  .text.changeToStatePlaying
-                0x0000000008000794       0x40 Core/Src/Recorder.o
-                0x0000000008000794                changeToStatePlaying
- .text.onStart  0x00000000080007d4       0x18 Core/Src/Recorder.o
-                0x00000000080007d4                onStart
+                0x0000000008000790       0x40 Core/Src/Recorder.o
+                0x0000000008000790                changeToStatePlaying
+ .text.onStart  0x00000000080007d0       0x18 Core/Src/Recorder.o
+                0x00000000080007d0                onStart
  .text.onUpdate
-                0x00000000080007ec       0x18 Core/Src/Recorder.o
-                0x00000000080007ec                onUpdate
+                0x00000000080007e8       0x18 Core/Src/Recorder.o
+                0x00000000080007e8                onUpdate
  .text.onTimerUpdate
-                0x0000000008000804       0x1c Core/Src/Recorder.o
-                0x0000000008000804                onTimerUpdate
+                0x0000000008000800       0x1c Core/Src/Recorder.o
+                0x0000000008000800                onTimerUpdate
  .text.onButton
-                0x0000000008000820       0x20 Core/Src/Recorder.o
-                0x0000000008000820                onButton
- .text.cleanUp  0x0000000008000840       0x30 Core/Src/StatePlaying.o
-                0x0000000008000840                cleanUp
+                0x000000000800081c       0x20 Core/Src/Recorder.o
+                0x000000000800081c                onButton
+ .text.cleanUp  0x000000000800083c       0x30 Core/Src/StatePlaying.o
+                0x000000000800083c                cleanUp
  .text.onStartStatePlaying
-                0x0000000008000870       0x4e Core/Src/StatePlaying.o
-                0x0000000008000870                onStartStatePlaying
- *fill*         0x00000000080008be        0x2 
+                0x000000000800086c       0x4e Core/Src/StatePlaying.o
+                0x000000000800086c                onStartStatePlaying
+ *fill*         0x00000000080008ba        0x2 
  .text.onUpdateStatePlaying
-                0x00000000080008c0       0x50 Core/Src/StatePlaying.o
-                0x00000000080008c0                onUpdateStatePlaying
+                0x00000000080008bc       0x54 Core/Src/StatePlaying.o
+                0x00000000080008bc                onUpdateStatePlaying
  .text.onTimerUpdateStatePlaying
                 0x0000000008000910       0x88 Core/Src/StatePlaying.o
                 0x0000000008000910                onTimerUpdateStatePlaying
@@ -4574,47 +4573,47 @@ LOAD c:/st/stm32cubeide_1.2.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
                 0x00000000000006f9       0x22 c:/st/stm32cubeide_1.2.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7e-m/fpv4-sp/hard/crtn.o
 OUTPUT(P48.elf elf32-littlearm)
 
-.debug_info     0x0000000000000000    0x11885
- .debug_info    0x0000000000000000      0xa2a Core/Src/List.o
- .debug_info    0x0000000000000a2a     0x1609 Core/Src/Recorder.o
- .debug_info    0x0000000000002033     0x1549 Core/Src/StatePlaying.o
- .debug_info    0x000000000000357c     0x1535 Core/Src/StateRecording.o
- .debug_info    0x0000000000004ab1     0x1507 Core/Src/StateWaiting.o
- .debug_info    0x0000000000005fb8     0x1d2b Core/Src/main.o
- .debug_info    0x0000000000007ce3     0x1094 Core/Src/stm32f4xx_hal_msp.o
- .debug_info    0x0000000000008d77      0x72e Core/Src/stm32f4xx_it.o
- .debug_info    0x00000000000094a5      0x91c Core/Src/sysmem.o
- .debug_info    0x0000000000009dc1      0x554 Core/Src/system_stm32f4xx.o
- .debug_info    0x000000000000a315       0x22 Core/Startup/startup_stm32f407vgtx.o
- .debug_info    0x000000000000a337      0x945 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
- .debug_info    0x000000000000ac7c      0xcee Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.o
- .debug_info    0x000000000000b96a      0xe28 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
- .debug_info    0x000000000000c792      0xa3a Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac.o
- .debug_info    0x000000000000d1cc      0x7b5 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
- .debug_info    0x000000000000d981      0x904 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
- .debug_info    0x000000000000e285     0x24a9 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
- .debug_info    0x000000000001072e     0x1157 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+.debug_info     0x0000000000000000    0x118df
+ .debug_info    0x0000000000000000      0xa34 Core/Src/List.o
+ .debug_info    0x0000000000000a34     0x1618 Core/Src/Recorder.o
+ .debug_info    0x000000000000204c     0x155d Core/Src/StatePlaying.o
+ .debug_info    0x00000000000035a9     0x1544 Core/Src/StateRecording.o
+ .debug_info    0x0000000000004aed     0x1516 Core/Src/StateWaiting.o
+ .debug_info    0x0000000000006003     0x1d3a Core/Src/main.o
+ .debug_info    0x0000000000007d3d     0x1094 Core/Src/stm32f4xx_hal_msp.o
+ .debug_info    0x0000000000008dd1      0x72e Core/Src/stm32f4xx_it.o
+ .debug_info    0x00000000000094ff      0x91c Core/Src/sysmem.o
+ .debug_info    0x0000000000009e1b      0x554 Core/Src/system_stm32f4xx.o
+ .debug_info    0x000000000000a36f       0x22 Core/Startup/startup_stm32f407vgtx.o
+ .debug_info    0x000000000000a391      0x945 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+ .debug_info    0x000000000000acd6      0xcee Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.o
+ .debug_info    0x000000000000b9c4      0xe28 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+ .debug_info    0x000000000000c7ec      0xa3a Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac.o
+ .debug_info    0x000000000000d226      0x7b5 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+ .debug_info    0x000000000000d9db      0x904 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+ .debug_info    0x000000000000e2df     0x24a9 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+ .debug_info    0x0000000000010788     0x1157 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
 
-.debug_abbrev   0x0000000000000000     0x238d
- .debug_abbrev  0x0000000000000000      0x1ca Core/Src/List.o
- .debug_abbrev  0x00000000000001ca      0x221 Core/Src/Recorder.o
- .debug_abbrev  0x00000000000003eb      0x203 Core/Src/StatePlaying.o
- .debug_abbrev  0x00000000000005ee      0x212 Core/Src/StateRecording.o
- .debug_abbrev  0x0000000000000800      0x205 Core/Src/StateWaiting.o
- .debug_abbrev  0x0000000000000a05      0x28a Core/Src/main.o
- .debug_abbrev  0x0000000000000c8f      0x1a6 Core/Src/stm32f4xx_hal_msp.o
- .debug_abbrev  0x0000000000000e35      0x15a Core/Src/stm32f4xx_it.o
- .debug_abbrev  0x0000000000000f8f      0x1bb Core/Src/sysmem.o
- .debug_abbrev  0x000000000000114a      0x12b Core/Src/system_stm32f4xx.o
- .debug_abbrev  0x0000000000001275       0x12 Core/Startup/startup_stm32f407vgtx.o
- .debug_abbrev  0x0000000000001287      0x1c7 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
- .debug_abbrev  0x000000000000144e      0x205 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.o
- .debug_abbrev  0x0000000000001653      0x2fa Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
- .debug_abbrev  0x000000000000194d      0x1e4 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac.o
- .debug_abbrev  0x0000000000001b31      0x1c9 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
- .debug_abbrev  0x0000000000001cfa      0x245 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
- .debug_abbrev  0x0000000000001f3f      0x230 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
- .debug_abbrev  0x000000000000216f      0x21e Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+.debug_abbrev   0x0000000000000000     0x2394
+ .debug_abbrev  0x0000000000000000      0x1d1 Core/Src/List.o
+ .debug_abbrev  0x00000000000001d1      0x221 Core/Src/Recorder.o
+ .debug_abbrev  0x00000000000003f2      0x203 Core/Src/StatePlaying.o
+ .debug_abbrev  0x00000000000005f5      0x212 Core/Src/StateRecording.o
+ .debug_abbrev  0x0000000000000807      0x205 Core/Src/StateWaiting.o
+ .debug_abbrev  0x0000000000000a0c      0x28a Core/Src/main.o
+ .debug_abbrev  0x0000000000000c96      0x1a6 Core/Src/stm32f4xx_hal_msp.o
+ .debug_abbrev  0x0000000000000e3c      0x15a Core/Src/stm32f4xx_it.o
+ .debug_abbrev  0x0000000000000f96      0x1bb Core/Src/sysmem.o
+ .debug_abbrev  0x0000000000001151      0x12b Core/Src/system_stm32f4xx.o
+ .debug_abbrev  0x000000000000127c       0x12 Core/Startup/startup_stm32f407vgtx.o
+ .debug_abbrev  0x000000000000128e      0x1c7 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+ .debug_abbrev  0x0000000000001455      0x205 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.o
+ .debug_abbrev  0x000000000000165a      0x2fa Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+ .debug_abbrev  0x0000000000001954      0x1e4 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac.o
+ .debug_abbrev  0x0000000000001b38      0x1c9 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+ .debug_abbrev  0x0000000000001d01      0x245 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+ .debug_abbrev  0x0000000000001f46      0x230 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+ .debug_abbrev  0x0000000000002176      0x21e Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
 
 .debug_aranges  0x0000000000000000      0xc98
  .debug_aranges

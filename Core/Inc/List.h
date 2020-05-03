@@ -11,12 +11,12 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-typedef struct Node {
+typedef volatile struct Node {
 	uint16_t *data;
-	struct Node *next;
+	volatile struct Node *next;
 } Node;
 
-typedef struct List {
+typedef volatile struct List {
 	Node *head;
 	Node *last;
 
