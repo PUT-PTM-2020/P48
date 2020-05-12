@@ -74,7 +74,6 @@ void changeToStatePlaying(Recorder *recorder) {
 	onStart(recorder);
 }
 
-
 void onStart(Recorder *recorder) {
 	recorder->onStartState(recorder);
 }
