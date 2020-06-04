@@ -8,7 +8,10 @@
 #include "StateWaiting.h"
 
 void onStartStateWaiting(Recorder *recorder) {
-
+	setLcdCursor(recorder, 1, 0);
+	setLcdText(recorder, "Waiting for an acti-");
+	setLcdCursor(recorder, 2, 0);
+	setLcdText(recorder, "-on ...             ");
 }
 
 void onUpdateStateWaiting(Recorder *recorder) {

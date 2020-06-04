@@ -37,6 +37,14 @@ void stopSpeaker(Recorder *recorder) {
 	HAL_DAC_Stop(recorder->speaker, DAC_CHANNEL_1);
 }
 
+void setLcdCursor(Recorder *recorder, uint8_t row, uint8_t col) {
+	Lcd_cursor(recorder->lcd, row, col);
+}
+
+void setLcdText(Recorder *recorder, char *string) {
+	Lcd_string(recorder->lcd, string);
+}
+
 uint32_t readMicrophoneData(Recorder *recorder) {
 	HAL_ADC_Start(recorder->microphone);
 

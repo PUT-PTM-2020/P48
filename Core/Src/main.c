@@ -24,6 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "Recorder.h"
+#include "lcd.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -53,6 +54,8 @@ TIM_HandleTypeDef htim4;
 /* USER CODE BEGIN PV */
 
 Recorder recorder;
+volatile Lcd_HandleTypeDef lcd;
+
 volatile int buttonLock = 0;
 
 /* USER CODE END PV */
@@ -77,12 +80,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-	if (buttonLock == 0 && HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET) {
-		onButton(&recorder, GPIO_Pin);
+	if (buttonLock != 0) return;
+	buttonLock = 1;
 
-		setTimer(&htim3, 1000, 8399);
-		startTimer(&htim3);
-		buttonLock = 1;
+	setTimer(&htim3, 1000, 8399);
+	startTimer(&htim3);
+
+	if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET) {
+		onButton(&recorder, GPIO_Pin);
 	}
 }
 /* USER CODE END PFP */
@@ -137,7 +142,28 @@ int main(void)
   recorder.soundTimer = &htim4;
   recorder.speaker = &hdac;
   recorder.microphone = &hadc1;
+
+  Lcd_PortType dataPorts[] = {
+		  GPIOD, GPIOD, GPIOD, GPIOD
+  };
+
+  Lcd_PinType dataPins[] = {
+		  GPIO_PIN_3, GPIO_PIN_4, GPIO_PIN_5, GPIO_PIN_6
+  };
+
+  lcd = Lcd_create(dataPorts, dataPins,
+		  GPIOD, GPIO_PIN_1, GPIOD, GPIO_PIN_2,
+		  LCD_4_BIT_MODE);
+
+  recorder.lcd = &lcd;
+
+  buttonLock = 0;
+
+  stopTimer(&htim3);
+  stopTimer(&htim4);
+
   changeToStateWaiting(&recorder);
+
   while (1)
   {
 	  onUpdate(&recorder);
@@ -422,16 +448,22 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15 
+                          |GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3|GPIO_PIN_4 
+                          |GPIO_PIN_5|GPIO_PIN_6, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : PA0 */
   GPIO_InitStruct.Pin = GPIO_PIN_0;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PD12 PD13 PD14 PD15 */
-  GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
+  /*Configure GPIO pins : PD12 PD13 PD14 PD15 
+                           PD1 PD2 PD3 PD4 
+                           PD5 PD6 */
+  GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15 
+                          |GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3|GPIO_PIN_4 
+                          |GPIO_PIN_5|GPIO_PIN_6;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

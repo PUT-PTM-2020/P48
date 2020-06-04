@@ -31,8 +31,8 @@ Core/Src/Recorder.o: ../Core/Src/Recorder.c ../Core/Inc/Recorder.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
- ../Core/Inc/ff.h ../Core/Inc/ffconf.h ../Core/Inc/List.h \
- ../Core/Inc/StateWaiting.h ../Core/Inc/Recorder.h \
+ ../Core/Inc/ff.h ../Core/Inc/ffconf.h ../Core/Inc/lcd.h \
+ ../Core/Inc/List.h ../Core/Inc/StateWaiting.h ../Core/Inc/Recorder.h \
  ../Core/Inc/StateRecording.h ../Core/Inc/StatePlaying.h
 
 ../Core/Inc/Recorder.h:
@@ -106,6 +106,8 @@ Core/Src/Recorder.o: ../Core/Src/Recorder.c ../Core/Inc/Recorder.h \
 ../Core/Inc/ff.h:
 
 ../Core/Inc/ffconf.h:
+
+../Core/Inc/lcd.h:
 
 ../Core/Inc/List.h:
 

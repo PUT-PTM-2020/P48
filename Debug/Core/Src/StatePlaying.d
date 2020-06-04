@@ -32,7 +32,8 @@ Core/Src/StatePlaying.o: ../Core/Src/StatePlaying.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
- ../Core/Inc/ff.h ../Core/Inc/ffconf.h ../Core/Inc/List.h
+ ../Core/Inc/ff.h ../Core/Inc/ffconf.h ../Core/Inc/lcd.h \
+ ../Core/Inc/List.h
 
 ../Core/Inc/StatePlaying.h:
 
@@ -107,5 +108,7 @@ Core/Src/StatePlaying.o: ../Core/Src/StatePlaying.c \
 ../Core/Inc/ff.h:
 
 ../Core/Inc/ffconf.h:
+
+../Core/Inc/lcd.h:
 
 ../Core/Inc/List.h:

@@ -10,6 +10,7 @@
 
 #include "main.h"
 #include "ff.h"
+#include "lcd.h"
 #include "List.h"
 
 #define FA_READ          0x01
@@ -26,6 +27,8 @@ typedef volatile struct Recorder {
 
 	DAC_HandleTypeDef *speaker;
 	ADC_HandleTypeDef *microphone;
+
+	Lcd_HandleTypeDef *lcd;
 
 	// current state
 	void (*onStartState)(volatile struct Recorder*);
@@ -53,6 +56,9 @@ void stopTimer(TIM_HandleTypeDef *timer);
 void startSpeaker(Recorder *recorder);
 void setSpeakerValue(Recorder *recorder, uint32_t value);
 void stopSpeaker(Recorder *recorder);
+
+void setLcdCursor(Recorder *recorder, uint8_t row, uint8_t col);
+void setLcdText(Recorder *recorder, char *string);
 
 uint32_t readMicrophoneData(Recorder *recorder);
 

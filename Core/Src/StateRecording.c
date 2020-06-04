@@ -9,6 +9,11 @@
 #include "List.h"
 
 void onStartStateRecording(Recorder *recorder) {
+	setLcdCursor(recorder, 1, 0);
+	setLcdText(recorder, "Recording with micr-");
+	setLcdCursor(recorder, 2, 0);
+	setLcdText(recorder, "-ophone ...         ");
+
 	recorder->soundData = 0;
 	recorder->soundList = createList(800);// 50 ms at 16k Hz
 
