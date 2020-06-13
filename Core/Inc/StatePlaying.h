@@ -13,6 +13,6 @@
 void onStartStatePlaying(Recorder *recorder);
 void onUpdateStatePlaying(Recorder *recorder);
 void onTimerUpdateStatePlaying(Recorder *recorder, TIM_HandleTypeDef *timer);
-void onButtonStatePlaying(Recorder *recorder, uint16_t pin);
+void onButtonStatePlaying(Recorder *recorder);
 
 #endif /* INC_STATEPLAYING_H_ */

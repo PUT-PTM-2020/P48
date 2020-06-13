@@ -13,6 +13,6 @@
 void onStartStateWaiting(Recorder *recorder);
 void onUpdateStateWaiting(Recorder *recorder);
 void onTimerUpdateStateWaiting(Recorder *recorder, TIM_HandleTypeDef *timer);
-void onButtonStateWaiting(Recorder *recorder, uint16_t pin);
+void onButtonStateWaiting(Recorder *recorder);
 
 #endif /* INC_STATEWAITING_H_ */

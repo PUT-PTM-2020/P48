@@ -17,9 +17,7 @@ void cleanUp(Recorder *recorder) {
 
 void onStartStatePlaying(Recorder *recorder) {
 	setLcdCursor(recorder, 1, 0);
-	setLcdText(recorder, "Playing current rec-");
-	setLcdCursor(recorder, 2, 0);
-	setLcdText(recorder, "-ording ...         ");
+	setLcdText(recorder, "   Odtwarzanie ...  ");
 
 	recorder->soundData = 0;
 	recorder->currentDataIndex = 0;
@@ -59,8 +57,8 @@ void onTimerUpdateStatePlaying(Recorder *recorder, TIM_HandleTypeDef *timer) {
 	}
 }
 
-void onButtonStatePlaying(Recorder *recorder, uint16_t pin) {
-//	if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET) {
-//		cleanUp(recorder);
-//	}
+void onButtonStatePlaying(Recorder *recorder) {
+	if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET) {
+		cleanUp(recorder);
+	}
 }

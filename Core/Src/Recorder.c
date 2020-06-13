@@ -94,6 +94,6 @@ void onTimerUpdate(Recorder *recorder, TIM_HandleTypeDef *timer) {
 	recorder->onTimerUpdateState(recorder, timer);
 }
 
-void onButton(Recorder *recorder, uint16_t pin) {
-	recorder->onButtonState(recorder, pin);
+void onButton(Recorder *recorder) {
+	recorder->onButtonState(recorder);
 }

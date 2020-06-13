@@ -9,9 +9,7 @@
 
 void onStartStateWaiting(Recorder *recorder) {
 	setLcdCursor(recorder, 1, 0);
-	setLcdText(recorder, "Waiting for an acti-");
-	setLcdCursor(recorder, 2, 0);
-	setLcdText(recorder, "-on ...             ");
+	setLcdText(recorder, "Oczekiwanie na akcje");
 }
 
 void onUpdateStateWaiting(Recorder *recorder) {
@@ -25,7 +23,7 @@ void onTimerUpdateStateWaiting(Recorder *recorder, TIM_HandleTypeDef *timer) {
 
 }
 
-void onButtonStateWaiting(Recorder *recorder, uint16_t pin) {
+void onButtonStateWaiting(Recorder *recorder) {
 	if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET) {
 		changeToStateRecording(recorder);
 	}

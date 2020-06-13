@@ -10,9 +10,7 @@
 
 void onStartStateRecording(Recorder *recorder) {
 	setLcdCursor(recorder, 1, 0);
-	setLcdText(recorder, "Recording with micr-");
-	setLcdCursor(recorder, 2, 0);
-	setLcdText(recorder, "-ophone ...         ");
+	setLcdText(recorder, "   Nagrywanie ...   ");
 
 	recorder->soundData = 0;
 	recorder->soundList = createList(800);// 50 ms at 16k Hz
@@ -36,7 +34,7 @@ void onTimerUpdateStateRecording(Recorder *recorder, TIM_HandleTypeDef *timer) {
 	}
 }
 
-void onButtonStateRecording(Recorder *recorder, uint16_t pin) {
+void onButtonStateRecording(Recorder *recorder) {
 	if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET) {
 		stopTimer(recorder->soundTimer);
 

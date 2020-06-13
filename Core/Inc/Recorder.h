@@ -34,7 +34,7 @@ typedef volatile struct Recorder {
 	void (*onStartState)(volatile struct Recorder*);
 	void (*onUpdateState)(volatile struct Recorder*);
 	void (*onTimerUpdateState)(volatile struct Recorder*, TIM_HandleTypeDef*);
-	void (*onButtonState)(volatile struct Recorder*, uint16_t);
+	void (*onButtonState)(volatile struct Recorder*);
 
 	// waiting state variables
 
@@ -69,6 +69,6 @@ void changeToStatePlaying(Recorder *recorder);
 void onStart(Recorder *recorder);
 void onUpdate(Recorder *recorder);
 void onTimerUpdate(Recorder *recorder, TIM_HandleTypeDef *timer);
-void onButton(Recorder *recorder, uint16_t pin);
+void onButton(Recorder *recorder);
 
 #endif /* INC_RECORDER_H_ */

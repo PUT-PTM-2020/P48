@@ -1,4 +1,4 @@
 StateRecording.c:11:6:onStartStateRecording	16	static
-StateRecording.c:24:6:onUpdateStateRecording	16	static
-StateRecording.c:33:6:onTimerUpdateStateRecording	16	static
-StateRecording.c:39:6:onButtonStateRecording	40	static
+StateRecording.c:22:6:onUpdateStateRecording	16	static
+StateRecording.c:31:6:onTimerUpdateStateRecording	16	static
+StateRecording.c:37:6:onButtonStateRecording	40	static

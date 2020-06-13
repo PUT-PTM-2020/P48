@@ -13,6 +13,6 @@
 void onStartStateRecording(Recorder *recorder);
 void onUpdateStateRecording(Recorder *recorder);
 void onTimerUpdateStateRecording(Recorder *recorder, TIM_HandleTypeDef *timer);
-void onButtonStateRecording(Recorder *recorder, uint16_t pin);
+void onButtonStateRecording(Recorder *recorder);
 
 #endif /* SRC_STATERECORDING_H_ */
