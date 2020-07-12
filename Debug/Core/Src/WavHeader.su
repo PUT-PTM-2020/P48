@@ -1,0 +1,8 @@
+WavHeader.c:10:6:readText	32	static
+WavHeader.c:18:6:readUInt	32	static
+WavHeader.c:28:6:readUShort	32	static
+WavHeader.c:37:6:writeText	32	static
+WavHeader.c:45:6:writeUInt	32	static
+WavHeader.c:55:6:writeUShort	32	static
+WavHeader.c:65:5:readWavHeader	72	static
+WavHeader.c:99:5:writeWavHeader	72	static

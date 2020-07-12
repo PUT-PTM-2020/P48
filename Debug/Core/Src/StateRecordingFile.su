@@ -1,0 +1,5 @@
+StateRecordingFile.c:10:6:saveFile	24	static
+StateRecordingFile.c:30:6:onStartStateRecordingFile	24	static
+StateRecordingFile.c:120:6:onUpdateStateRecordingFile	16	static
+StateRecordingFile.c:124:6:onTimerUpdateStateRecordingFile	24	static
+StateRecordingFile.c:163:6:onButtonStateRecordingFile	16	static

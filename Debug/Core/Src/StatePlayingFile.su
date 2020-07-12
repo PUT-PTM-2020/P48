@@ -1,0 +1,6 @@
+StatePlayingFile.c:10:5:findTimerSettings	40	static
+StatePlayingFile.c:32:6:cleanUpFile	16	static
+StatePlayingFile.c:41:6:onStartStatePlayingFile	32	static
+StatePlayingFile.c:135:6:onUpdateStatePlayingFile	16	static
+StatePlayingFile.c:139:6:onTimerUpdateStatePlayingFile	24	static
+StatePlayingFile.c:180:6:onButtonStatePlayingFile	16	static

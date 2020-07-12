@@ -12,18 +12,15 @@
 #include "ff.h"
 #include "lcd.h"
 #include "List.h"
+#include "WavHeader.h"
 
-#define FA_READ          0x01
-#define FA_WRITE         0x02
-#define FA_OPEN_EXISTING 0x00
-#define FA_CREATE_NEW    0x04
-#define FA_CREATE_ALWAYS 0x08
-#define FA_OPEN_ALWAYS   0x10
-#define FA_OPEN_APPEND   0x30
+// 32768
+#define BUFFER_LEN 32768
 
 typedef volatile struct Recorder {
 	// hardware handles
 	TIM_HandleTypeDef *soundTimer;
+	TIM_HandleTypeDef *fileTimer;
 
 	DAC_HandleTypeDef *speaker;
 	ADC_HandleTypeDef *microphone;
@@ -45,11 +42,24 @@ typedef volatile struct Recorder {
 	// playing state variables
 	Node *currentSoundNode;
 	uint64_t currentDataIndex;
+
+	// playing/recording file state variables
+	FATFS fatFs;
+
+	FIL file;
+	WavHeader wavHeader;
+
+	uint32_t counter;
+	unsigned int currentBuffer;
+	char buffer[2][BUFFER_LEN];
+	unsigned char bufferReady[2];
+
+	unsigned int remainingBytes[2];
 } Recorder;
 
 void startTimer(TIM_HandleTypeDef *timer);
 
-void setTimer(TIM_HandleTypeDef *timer, short prescaler, short period);
+void setTimer(TIM_HandleTypeDef *timer, unsigned short prescaler, unsigned short period);
 
 void stopTimer(TIM_HandleTypeDef *timer);
 
@@ -59,12 +69,15 @@ void stopSpeaker(Recorder *recorder);
 
 void setLcdCursor(Recorder *recorder, uint8_t row, uint8_t col);
 void setLcdText(Recorder *recorder, char *string);
+void setLcdInt(Recorder *recorder, int i);
 
 uint32_t readMicrophoneData(Recorder *recorder);
 
 void changeToStateWaiting(Recorder *recorder);
 void changeToStateRecording(Recorder *recorder);
+void changeToStateRecordingFile(Recorder *recorder);
 void changeToStatePlaying(Recorder *recorder);
+void changeToStatePlayingFile(Recorder *recorder);
 
 void onStart(Recorder *recorder);
 void onUpdate(Recorder *recorder);

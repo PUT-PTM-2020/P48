@@ -33,7 +33,7 @@ Core/Src/StateRecording.o: ../Core/Src/StateRecording.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Core/Inc/ff.h ../Core/Inc/ffconf.h ../Core/Inc/lcd.h \
- ../Core/Inc/List.h ../Core/Inc/List.h
+ ../Core/Inc/List.h ../Core/Inc/WavHeader.h ../Core/Inc/List.h
 
 ../Core/Inc/StateRecording.h:
 
@@ -112,5 +112,7 @@ Core/Src/StateRecording.o: ../Core/Src/StateRecording.c \
 ../Core/Inc/lcd.h:
 
 ../Core/Inc/List.h:
+
+../Core/Inc/WavHeader.h:
 
 ../Core/Inc/List.h:
